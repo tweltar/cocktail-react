@@ -18,8 +18,7 @@ import LocalBarOutlinedIcon from "@material-ui/icons/LocalBarOutlined";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Slide from "@material-ui/core/Slide";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 220;
 
@@ -90,8 +89,6 @@ const SideNav = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openAvatar = Boolean(anchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,14 +96,6 @@ const SideNav = (props) => {
 
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   const HideOnScroll = (props) => {
@@ -153,21 +142,10 @@ const SideNav = (props) => {
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
-                  onClick={handleMenu}
                   color="inherit"
                 >
                   <AccountCircle />
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={openAvatar}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                </Menu>
               </div>
             </Toolbar>
           </AppBar>
@@ -203,7 +181,9 @@ const SideNav = (props) => {
             "Alcoholic",
           ].map((text) => (
             <ListItem button key={text}>
-              <ListItemText primary={text} />
+              <Link to={`/${text}`} key={text}>
+                <ListItemText primary={text} />{" "}
+              </Link>
             </ListItem>
           ))}
         </List>
@@ -211,7 +191,9 @@ const SideNav = (props) => {
         <List>
           {["Favourites", "About"].map((text) => (
             <ListItem button key={text}>
-              <ListItemText primary={text} />
+              <Link to={`/${text}`} key={text}>
+                <ListItemText primary={text} />{" "}
+              </Link>
             </ListItem>
           ))}
         </List>

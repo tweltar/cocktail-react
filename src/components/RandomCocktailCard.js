@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Axios from "axios";
+import Loader from "./Loader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,23 +16,43 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 1,
     width: 280,
-    paddingTop: "90%", // 16:9
+    paddingTop: "100%", // 16:9
   },
 }));
 
-const RandomCocktailCard = () => {
+const RandomCocktailCard = ({ card }) => {
   const classes = useStyles();
+  const [randomCocktail, setRandomCocktail] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  return (
+  const fetchRandomCocktail = async () => {
+    try {
+      const res = await Axios.get("/random.php");
+      setRandomCocktail(res.data.drinks[0]);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchRandomCocktail();
+  }, []);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <Card className={classes.root}>
+      {" "}
       <CardMedia
         className={classes.media}
-        image="https://www.thecocktaildb.com/images/media/drink/ttyrxr1478820678.jpg"
-        title="Paella dish"
+        image={randomCocktail.strDrinkThumb}
+        title={randomCocktail.strDrink}
       />
       <CardContent>
         <Typography variant="h6" component="h5">
-          Paella dish
+          {randomCocktail.strDrink}
         </Typography>
       </CardContent>
     </Card>

@@ -17,11 +17,18 @@ function App() {
   return (
     <ThemeProvider theme={customizedTheme}>
       <div className="App">
-        <SideNav />
         <Router>
+          <SideNav></SideNav>
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
             <Route exact path="/home" component={HomePage}></Route>
+            {/* <Route exact path="/search" component={Search}></Route>
+            <Route exact path="/categories" component={Categories}></Route>
+            <Route exact path="/glass" component={Glass}></Route>
+            <Route exact path="/ingredients" component={Ingredients}></Route>
+            <Route exact path="/alcoholic" component={Alcoholic}></Route>
+            <Route exact path="/favourites" component={Favourites}></Route>
+            <Route exact path="/about" component={About}></Route> */}
           </Switch>
         </Router>
       </div>
