@@ -180,21 +180,21 @@ const SideNav = (props) => {
             "Ingredients",
             "Alcoholic",
           ].map((text) => (
-            <ListItem button key={text}>
-              <Link to={`/${text}`} key={text}>
+            <Link to={`/${text}`} key={text}>
+              <ListItem button key={text}>
                 <ListItemText primary={text} />{" "}
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
         <List>
           {["Favourites", "About"].map((text) => (
-            <ListItem button key={text}>
-              <Link to={`/${text}`} key={text}>
+            <Link to={`/${text}`} key={text}>
+              <ListItem button key={text}>
                 <ListItemText primary={text} />{" "}
-              </Link>
-            </ListItem>
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>

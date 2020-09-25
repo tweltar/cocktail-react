@@ -48,12 +48,12 @@ const HomePage = () => {
     <div className={classes.HomePage} color="primary">
       <section>
         <div className={classes.RandomCardContainer}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((card, index) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((card, index) => (
             <RandomCocktailCard key={index} card={card} />
           ))}
         </div>
         <Typography variant="h5" style={{ marginBottom: "30px" }}>
-          And many more...
+          See More...
         </Typography>
       </section>
       <section className={classes.Accordion}>

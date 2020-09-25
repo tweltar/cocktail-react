@@ -9,13 +9,14 @@ import Loader from "./Loader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 280,
+    maxWidth: 230,
     marginBottom: "25px",
     margin: "0 20px",
+    maxHeight: "fit-content",
   },
   media: {
     height: 1,
-    width: 280,
+    width: 230,
     paddingTop: "100%", // 16:9
   },
 }));
@@ -51,7 +52,7 @@ const RandomCocktailCard = ({ card }) => {
         title={randomCocktail.strDrink}
       />
       <CardContent>
-        <Typography variant="h6" component="h5">
+        <Typography variant="body1" component="p">
           {randomCocktail.strDrink}
         </Typography>
       </CardContent>
