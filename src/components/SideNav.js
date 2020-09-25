@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -180,7 +180,7 @@ const SideNav = (props) => {
             "Ingredients",
             "Alcoholic",
           ].map((text) => (
-            <Link to={`/${text}`} key={text}>
+            <Link to={`/${text}`} key={text} onClick={handleDrawerClose}>
               <ListItem button key={text}>
                 <ListItemText primary={text} />{" "}
               </ListItem>
@@ -190,7 +190,7 @@ const SideNav = (props) => {
         <Divider />
         <List>
           {["Favourites", "About"].map((text) => (
-            <Link to={`/${text}`} key={text}>
+            <Link to={`/${text}`} key={text} onClick={handleDrawerClose}>
               <ListItem button key={text}>
                 <ListItemText primary={text} />{" "}
               </ListItem>
