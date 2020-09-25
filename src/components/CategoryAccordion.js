@@ -5,6 +5,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -39,18 +40,41 @@ const CategoryAccordion = () => {
       <AccordionDetails className={classes.accordionDetails}>
         <div className={classes.list}>
           <ul>
-            <li>Cocktail</li>
-            <li>Shot</li>
-            <li>Punch / Party Drink</li>
-            <li>Beer</li>
-            <li>Homemade Liqueur</li>
+            <Link to="/Categories/cocktail">
+              <li>Cocktail</li>
+            </Link>
+            <Link to="/Categories/shot">
+              <li>Shot</li>
+            </Link>
+            <Link to="/Categories/punch / party drink">
+              <li>Punch / Party Drink</li>
+            </Link>
+            <Link to="/Categories/beer">
+              <li>Beer</li>
+            </Link>
+            <Link to="/Categories/homemade liqueur">
+              <li>Homemade Liqueur</li>
+            </Link>
+            <Link to="/Categories/soft drink / soda">
+              <li>Soft Drink / Soda</li>
+            </Link>
           </ul>
           <ul>
-            <li>Soft Drink / Soda</li>
-            <li>Milk / Float / Shake</li>
-            <li>Cocoa</li>
-            <li>Coffee / Tea</li>
-            <li>Ordinary Drink</li>
+            <Link to="/Categories/milk / float / shake">
+              <li>Milk / Float / Shake</li>
+            </Link>
+            <Link to="/Categories/cocoa">
+              <li>Cocoa</li>
+            </Link>
+            <Link to="/Categories/coffee / tea">
+              <li>Coffee / Tea</li>
+            </Link>
+            <Link to="/Categories/ordinary drink">
+              <li>Ordinary Drink</li>
+            </Link>
+            <Link to="/Categories/other/unknown">
+              <li>Others</li>
+            </Link>
           </ul>
         </div>
       </AccordionDetails>
