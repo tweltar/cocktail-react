@@ -13,7 +13,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
   const classes = useStyles();
 
@@ -32,7 +32,7 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -40,12 +40,12 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
+const a11yProps = (index) => {
   return {
     id: `scrollable-auto-tab-${index}`,
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Category() {
+const Category = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState("Cocktail");
@@ -72,7 +72,6 @@ export default function Category() {
     try {
       const res = await Axios.get(`filter.php?c=${cat}`);
       setCategoryDetail(res.data.drinks);
-      console.log(res.data.drinks);
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +113,11 @@ export default function Category() {
           <TabPanel value={value} index={j++} key={c}>
             {categoryDetail ? (
               categoryDetail.map((cocktail) => (
-                <CocktailCard key={cocktail.idDrink} cocktail={cocktail} />
+                <CocktailCard
+                  key={cocktail.idDrink}
+                  cocktail={cocktail}
+                  category={c}
+                />
               ))
             ) : (
               <Loader />
@@ -123,4 +126,6 @@ export default function Category() {
         ))}
     </div>
   );
-}
+};
+
+export default Category;
