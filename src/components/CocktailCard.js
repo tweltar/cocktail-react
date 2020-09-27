@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShareIcon from "@material-ui/icons/Share";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CocktailCard = ({ cocktail }) => {
   const classes = useStyles();
-  // const [isFav, setIsFav] = useState(false);
+  const [isFav, setIsFav] = useState(false);
 
   return (
     <Card className={classes.root}>
@@ -58,7 +59,7 @@ const CocktailCard = ({ cocktail }) => {
         image={cocktail.strDrinkThumb}
         title={cocktail.strDrink}
       />
-      <CardContent className={classes.cardContent}>
+      {/* <CardContent className={classes.cardContent}>
         <Typography
           variant="body2"
           color="textSecondary"
@@ -69,10 +70,14 @@ const CocktailCard = ({ cocktail }) => {
           together with your guests. Add 1 cup of frozen peas along with the
           mussels, if you like.
         </Typography>
-      </CardContent>
+      </CardContent> */}
       <CardActions className={classes.cardAction}>
-        <IconButton>
-          <FavoriteIcon fontSize="small" />
+        <IconButton onClick={() => setIsFav(!isFav)}>
+          {isFav ? (
+            <FavoriteIcon fontSize="small" />
+          ) : (
+            <FavoriteBorderOutlinedIcon fontSize="small" />
+          )}
         </IconButton>
         <IconButton>
           <ShareIcon fontSize="small" />
