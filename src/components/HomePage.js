@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    padding: "0 30px",
+    padding: "20px 30px",
   },
   Accordion: {
     margin: "30px 80px",

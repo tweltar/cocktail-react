@@ -10,9 +10,10 @@ import Loader from "./Loader";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 230,
-    marginBottom: "25px",
     margin: "0 20px",
+    marginTop: "20px",
     maxHeight: "fit-content",
+    border: "1px solid white",
   },
   media: {
     height: 1,
