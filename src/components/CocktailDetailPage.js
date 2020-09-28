@@ -4,10 +4,11 @@ import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
 import Chip from "@material-ui/core/Chip";
 import { Link } from "react-router-dom";
+import IngredientDetail from "./IngredientDetail";
 
 const useStyles = makeStyles((theme) => ({
   Cocktail: {
-    padding: "20px 30px",
+    padding: "30px 50px",
   },
   Card: {
     display: "flex",
@@ -39,11 +40,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardDetail = ({ match }) => {
+const CocktailDetailPage = ({ match }) => {
   const classes = useStyles();
   const [cocktail, setCocktail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [ingredientList, setIngredientList] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [ingredient, setIngredient] = useState("");
 
   const fetchCocktail = async (id) => {
     try {
@@ -55,6 +58,14 @@ const CardDetail = ({ match }) => {
       console.log(error);
       setIsLoading(true);
     }
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const addToObject = (obj, key, value, index) => {
@@ -89,7 +100,6 @@ const CardDetail = ({ match }) => {
         cocktail[key] !== ""
       ) {
         temp = addToObject(temp, "strIngredient", cocktail[key]);
-        console.log(temp);
         ingreList.push(temp);
       }
     }
@@ -107,13 +117,11 @@ const CardDetail = ({ match }) => {
         );
       }
     }
-    console.log(ingreList);
     setIngredientList(ingreList);
   };
 
   useEffect(() => {
     fetchCocktail(match.params.id);
-    console.log(match.params.id);
   }, [match.params.id]);
 
   return isLoading ? (
@@ -178,14 +186,17 @@ const CardDetail = ({ match }) => {
         <div className={classes.IngredientList}>
           {ingredientList &&
             ingredientList.map((ingre, index) => (
-              <Link
+              <div
                 key={index}
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "5px",
                 }}
-                to={`/ingredients/${ingre.strIngredient}`}
+                onClick={() => {
+                  handleOpen();
+                  setIngredient(ingre.strIngredient);
+                }}
               >
                 <img
                   className={classes.IngreImage}
@@ -195,12 +206,17 @@ const CardDetail = ({ match }) => {
                   {ingre.strIngredient}
                 </p>
                 <p style={{ margin: 0 }}>{ingre.strIngredientMeasure}</p>
-              </Link>
+              </div>
             ))}
         </div>
+        <IngredientDetail
+          open={open}
+          handleClose={handleClose}
+          ingre={ingredient}
+        />
       </div>
     )
   );
 };
 
-export default CardDetail;
+export default CocktailDetailPage;

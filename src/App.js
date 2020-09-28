@@ -7,7 +7,7 @@ import recreateMuiTheme from "./theme/recreateMuiTheme";
 import { colorValues, modes } from "./utils";
 import { ThemeProvider } from "@material-ui/core";
 import Category from "./components/Category";
-import CardDetail from "./components/CardDetail";
+import CocktailDetailPage from "./components/CocktailDetailPage";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -26,7 +26,11 @@ function App() {
             <Route exact path="/home" component={HomePage}></Route>
             {/* <Route exact path="/search" component={Search}></Route> */}
             <Route exact path="/categories" component={Category}></Route>
-            <Route exact path="/cocktail/:id" component={CardDetail}></Route>
+            <Route
+              exact
+              path="/cocktail/:id"
+              component={CocktailDetailPage}
+            ></Route>
             {/* <Route exact path="/glass" component={Glass}></Route>
             <Route exact path="/ingredients" component={Ingredients}></Route>
             <Route exact path="/alcoholic" component={Alcoholic}></Route>
