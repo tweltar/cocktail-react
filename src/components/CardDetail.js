@@ -1,41 +1,41 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import IconButton from "@material-ui/core/IconButton";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-// import tileData from "./tileData";
+import Chip from "@material-ui/core/Chip";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  Cocktail: {
+    padding: "20px 30px",
+  },
+  Card: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: "20px",
+    maxWidth: "100vw",
+  },
   CardDetail: {
     display: "flex",
-    flexFlow: "row wrap",
-    padding: "20px 30px",
+    flexDirection: "column",
+    padding: "0 30px",
+    textAlign: "left",
+    flexGrow: 0.5,
   },
   CardImage: {
     width: 400,
     borderRadius: "10px",
   },
-  root: {
+  SubTitle: {
+    fontSize: "120%",
+    textAlign: "left",
+  },
+  IngredientList: {
     display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    overflow: "hidden",
+    flexFlow: "row wrap",
   },
-  gridList: {
-    flexWrap: "nowrap",
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)",
-  },
-  title: {
-    color: "white",
-  },
-  titleBar: {
-    background:
-      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  IngreImage: {
+    width: 180,
   },
 }));
 
@@ -44,7 +44,6 @@ const CardDetail = ({ match }) => {
   const [cocktail, setCocktail] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [ingredientList, setIngredientList] = useState([]);
-  const [ingredientMeasureList, setIngredientMeasureList] = useState([]);
 
   const fetchCocktail = async (id) => {
     try {
@@ -52,33 +51,64 @@ const CardDetail = ({ match }) => {
       setCocktail(res.data.drinks[0]);
       setIsLoading(false);
       ingredients(res.data.drinks[0]);
-      ingredientsMeasure(res.data.drinks[0]);
     } catch (error) {
       console.log(error);
       setIsLoading(true);
     }
   };
 
+  const addToObject = (obj, key, value, index) => {
+    var temp = {};
+    var i = 0;
+
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        if (i === index && key && value) {
+          temp[key] = value;
+        }
+        temp[prop] = obj[prop];
+        i++;
+      }
+    }
+    if (!index && key && value) {
+      temp[key] = value;
+    }
+
+    return temp;
+  };
+
   const ingredients = (cocktail) => {
     var ingreList = [];
+    var temp = {};
+    var i = 0;
+
     for (var key in cocktail) {
-      if (key.substring(0, 13) === "strIngredient" && cocktail[key] !== null) {
-        ingreList.push(cocktail[key]);
+      if (
+        key.substring(0, 13) === "strIngredient" &&
+        cocktail[key] !== null &&
+        cocktail[key] !== ""
+      ) {
+        temp = addToObject(temp, "strIngredient", cocktail[key]);
+        console.log(temp);
+        ingreList.push(temp);
+      }
+    }
+
+    for (var key in cocktail) {
+      if (
+        key.substring(0, 10) === "strMeasure" &&
+        cocktail[key] !== null &&
+        cocktail[key] !== ""
+      ) {
+        ingreList[i] = addToObject(
+          ingreList[i++],
+          "strIngredientMeasure",
+          cocktail[key]
+        );
       }
     }
     console.log(ingreList);
     setIngredientList(ingreList);
-  };
-
-  const ingredientsMeasure = (cocktail) => {
-    var ingreMeasureList = [];
-    for (var key in cocktail) {
-      if (key.substring(0, 10) === "strMeasure" && cocktail[key] !== null) {
-        ingreMeasureList.push(cocktail[key]);
-      }
-    }
-    console.log(ingreMeasureList);
-    setIngredientMeasureList(ingreMeasureList);
   };
 
   useEffect(() => {
@@ -90,8 +120,8 @@ const CardDetail = ({ match }) => {
     <Loader />
   ) : (
     cocktail && (
-      <div>
-        <div className={classes.CardDetail}>
+      <div className={classes.Cocktail}>
+        <div className={classes.Card}>
           <div>
             <img
               src={cocktail.strDrinkThumb}
@@ -99,27 +129,74 @@ const CardDetail = ({ match }) => {
               className={classes.CardImage}
             />
           </div>
-          <div></div>
+          <div className={classes.CardDetail}>
+            <Typography variant="h4" component="h4">
+              {cocktail.strDrink}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                flexFlow: "row wrap",
+                justifyContent: "flex-start",
+                paddingBottom: 20,
+              }}
+            >
+              {cocktail.strCategory && (
+                <Chip
+                  variant="outlined"
+                  label={cocktail.strCategory}
+                  style={{ marginRight: 5 }}
+                />
+              )}
+              {cocktail.strAlcoholic && (
+                <Chip variant="outlined" label={cocktail.strAlcoholic} />
+              )}
+            </div>
+            {cocktail.strGlass && (
+              <Typography
+                variant="body1"
+                component="p"
+                style={{ paddingTop: 5 }}
+              >
+                <span style={{ fontWeight: "bold" }}>Glass:</span>{" "}
+                {cocktail.strGlass}
+              </Typography>
+            )}
+            {cocktail.strInstructions && (
+              <Typography
+                variant="body1"
+                component="p"
+                style={{ paddingTop: 5 }}
+              >
+                <span style={{ fontWeight: "bold" }}>Instructions:</span>{" "}
+                {cocktail.strInstructions}
+              </Typography>
+            )}
+          </div>
         </div>
-        <div className={classes.root}>
-          <GridList className={classes.gridList} cols={3.5}>
-            {ingredientList &&
-              ingredientList.map((ingreTitle, index) => (
-                <GridListTile key={index}>
-                  <img
-                    src={`https://www.thecocktaildb.com/images/ingredients/${ingreTitle}-Medium.png`}
-                    alt=""
-                  />
-                  <GridListTileBar
-                    title={ingreTitle}
-                    classes={{
-                      root: classes.titleBar,
-                      title: classes.title,
-                    }}
-                  />
-                </GridListTile>
-              ))}
-          </GridList>
+        <p className={classes.SubTitle}>Ingredients:</p>
+        <div className={classes.IngredientList}>
+          {ingredientList &&
+            ingredientList.map((ingre, index) => (
+              <Link
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "5px",
+                }}
+                to={`/ingredients/${ingre.strIngredient}`}
+              >
+                <img
+                  className={classes.IngreImage}
+                  src={`https://www.thecocktaildb.com/images/ingredients/${ingre.strIngredient}-Medium.png`}
+                />
+                <p style={{ fontSize: "120%", marginBottom: 0 }}>
+                  {ingre.strIngredient}
+                </p>
+                <p style={{ margin: 0 }}>{ingre.strIngredientMeasure}</p>
+              </Link>
+            ))}
         </div>
       </div>
     )
