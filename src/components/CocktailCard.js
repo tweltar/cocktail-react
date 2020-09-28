@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -47,25 +48,33 @@ const CocktailCard = ({ cocktail, category }) => {
 
   return (
     <Card className={classes.root}>
-      <div>
-        <p className={classes.title}>{cocktail.strDrink}</p>
-        <p className={classes.subtitle}>{category}</p>
-      </div>
-      <CardMedia
-        className={classes.media}
-        image={cocktail.strDrinkThumb}
-        title={cocktail.strDrink}
-      />
+      <Link to={`/cocktail/${cocktail.idDrink}`}>
+        <div>
+          <p className={classes.title}>{cocktail.strDrink}</p>
+          <p className={classes.subtitle}>{category}</p>
+        </div>
+        <CardMedia
+          className={classes.media}
+          image={cocktail.strDrinkThumb}
+          title={cocktail.strDrink}
+        />
+      </Link>
       <CardActions className={classes.cardAction}>
         <IconButton onClick={() => setIsFav(!isFav)}>
           {isFav ? (
-            <FavoriteIcon fontSize="small" />
+            <FavoriteIcon
+              fontSize="small"
+              titleAccess="Remove from Favourites"
+            />
           ) : (
-            <FavoriteBorderOutlinedIcon fontSize="small" />
+            <FavoriteBorderOutlinedIcon
+              fontSize="small"
+              titleAccess="Add to Favourites"
+            />
           )}
         </IconButton>
         <IconButton>
-          <ShareIcon fontSize="small" />
+          <ShareIcon fontSize="small" titleAccess="Share" />
         </IconButton>
       </CardActions>
     </Card>
