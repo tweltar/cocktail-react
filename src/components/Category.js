@@ -5,7 +5,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Axios from "axios";
 import { categories } from "../utils";
-import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import CocktailCard from "./CocktailCard";
 

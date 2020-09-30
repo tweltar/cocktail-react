@@ -56,10 +56,12 @@ const IngredientDetail = ({ open, handleClose, ingre }) => {
         <Fade in={open}>
           {ingredient && (
             <div className={classes.paper}>
-              <img
-                src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png`}
-                alt=""
-              />
+              <div style={{ float: "left" }}>
+                <img
+                  src={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png`}
+                  alt=""
+                />
+              </div>
               <div>
                 <Typography variant="h5" component="h5">
                   {ingredient.strIngredient}

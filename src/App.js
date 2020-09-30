@@ -8,6 +8,7 @@ import { colorValues, modes } from "./utils";
 import { ThemeProvider } from "@material-ui/core";
 import Category from "./components/Category";
 import CocktailDetailPage from "./components/CocktailDetailPage";
+import IngredientDetailPage from "./components/IngredientDetailPage";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -31,8 +32,14 @@ function App() {
               path="/cocktail/:id"
               component={CocktailDetailPage}
             ></Route>
+            {/* <Route exact path="/ingredients" component={Ingredients}></Route> */}
+            <Route
+              exact
+              path="/ingredients/:id"
+              component={IngredientDetailPage}
+            ></Route>
             {/* <Route exact path="/glass" component={Glass}></Route>
-            <Route exact path="/ingredients" component={Ingredients}></Route>
+            
             <Route exact path="/alcoholic" component={Alcoholic}></Route>
             <Route exact path="/favourites" component={Favourites}></Route>
             <Route exact path="/about" component={About}></Route> */}

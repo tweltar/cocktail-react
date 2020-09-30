@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Loader from "./Loader";
 import Chip from "@material-ui/core/Chip";
 import { Link } from "react-router-dom";
-import IngredientDetail from "./IngredientDetail";
 
 const useStyles = makeStyles((theme) => ({
   Cocktail: {
@@ -58,14 +57,6 @@ const CocktailDetailPage = ({ match }) => {
       console.log(error);
       setIsLoading(true);
     }
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const addToObject = (obj, key, value, index) => {
@@ -186,17 +177,14 @@ const CocktailDetailPage = ({ match }) => {
         <div className={classes.IngredientList}>
           {ingredientList &&
             ingredientList.map((ingre, index) => (
-              <div
+              <Link
                 key={index}
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: "5px",
                 }}
-                onClick={() => {
-                  handleOpen();
-                  setIngredient(ingre.strIngredient);
-                }}
+                to={`ingredients/${ingre.strIngredient}`}
               >
                 <img
                   className={classes.IngreImage}
@@ -206,14 +194,9 @@ const CocktailDetailPage = ({ match }) => {
                   {ingre.strIngredient}
                 </p>
                 <p style={{ margin: 0 }}>{ingre.strIngredientMeasure}</p>
-              </div>
+              </Link>
             ))}
         </div>
-        <IngredientDetail
-          open={open}
-          handleClose={handleClose}
-          ingre={ingredient}
-        />
       </div>
     )
   );

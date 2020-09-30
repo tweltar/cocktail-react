@@ -40,39 +40,39 @@ const CategoryAccordion = () => {
       <AccordionDetails className={classes.accordionDetails}>
         <div className={classes.list}>
           <ul>
-            <Link to="/Categories/cocktail">
+            <Link to="/categories">
               <li>Cocktail</li>
             </Link>
-            <Link to="/Categories/shot">
+            <Link to="/categories">
               <li>Shot</li>
             </Link>
-            <Link to="/Categories/punch / party drink">
+            <Link to="/categories">
               <li>Punch / Party Drink</li>
             </Link>
-            <Link to="/Categories/beer">
+            <Link to="/categories">
               <li>Beer</li>
             </Link>
-            <Link to="/Categories/homemade liqueur">
+            <Link to="/categories">
               <li>Homemade Liqueur</li>
             </Link>
-            <Link to="/Categories/soft drink / soda">
+            <Link to="/categories">
               <li>Soft Drink / Soda</li>
             </Link>
           </ul>
           <ul>
-            <Link to="/Categories/milk / float / shake">
+            <Link to="/categories">
               <li>Milk / Float / Shake</li>
             </Link>
-            <Link to="/Categories/cocoa">
+            <Link to="/categories">
               <li>Cocoa</li>
             </Link>
-            <Link to="/Categories/coffee / tea">
+            <Link to="/categories">
               <li>Coffee / Tea</li>
             </Link>
-            <Link to="/Categories/ordinary drink">
+            <Link to="/categories">
               <li>Ordinary Drink</li>
             </Link>
-            <Link to="/Categories/other/unknown">
+            <Link to="/categories">
               <li>Others</li>
             </Link>
           </ul>
