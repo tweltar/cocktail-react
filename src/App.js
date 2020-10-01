@@ -28,17 +28,18 @@ function App() {
             <Route exact path="/home" component={HomePage}></Route>
             {/* <Route exact path="/search" component={Search}></Route> */}
             <Route exact path="/categories" component={Category}></Route>
-            <Route
-              exact
-              path="/cocktail/:id"
-              component={CocktailDetailPage}
-            ></Route>
             <Route exact path="/:id" component={Filter}></Route>
             <Route
               exact
               path="/ingredients/:id"
               component={IngredientDetailPage}
             ></Route>
+            <Route
+              exact
+              path="/cocktail/:id"
+              component={CocktailDetailPage}
+            ></Route>
+
             {/* <Route exact path="/glass" component={Glass}></Route>
             
             <Route exact path="/alcoholic" component={Alcoholic}></Route>

@@ -92,7 +92,6 @@ const Category = () => {
           textColor="primary"
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
         >
           {categories &&
             categories.map((c) => (

@@ -111,7 +111,6 @@ const Filter = ({ match }) => {
           textColor="primary"
           variant="scrollable"
           scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
         >
           {filterList &&
             filterList.map((f) => {

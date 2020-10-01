@@ -184,7 +184,7 @@ const CocktailDetailPage = ({ match }) => {
                   flexDirection: "column",
                   borderRadius: "5px",
                 }}
-                to={`ingredients/${ingre.strIngredient}`}
+                to={`/ingredients/${ingre.strIngredient}`}
               >
                 <img
                   className={classes.IngreImage}
