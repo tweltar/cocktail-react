@@ -100,7 +100,10 @@ const Category = () => {
                 key={c}
                 label={`${c}`}
                 {...a11yProps(i++)}
-                onClick={() => setCategory(`${c}`)}
+                onClick={() => {
+                  setCategory(`${c}`);
+                  setCategoryDetail([]);
+                }}
               />
             ))}
         </Tabs>

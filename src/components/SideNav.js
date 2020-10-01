@@ -77,11 +77,16 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  title: {
+  header: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     flexGrow: 1,
+  },
+  title: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 }));
 
@@ -133,9 +138,11 @@ const SideNav = (props) => {
               >
                 <MenuIcon />
               </IconButton>
-              <div className={classes.title}>
-                <LocalBarOutlinedIcon fontSize="large" />
-                <Typography variant="h4">Cocktail</Typography>
+              <div className={classes.header}>
+                <Link to="/" className={classes.title}>
+                  <LocalBarOutlinedIcon fontSize="large" />
+                  <Typography variant="h4">Cocktail</Typography>
+                </Link>
               </div>
               <div>
                 <IconButton

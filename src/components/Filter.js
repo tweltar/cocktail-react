@@ -59,51 +59,43 @@ const useStyles = makeStyles((theme) => ({
 const Filter = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [filter, setFilter] = useState([]);
-  const [firstFilter, setFirstFilter] = useState({});
+  const [filterList, setFilterList] = useState([]);
+  const [filter, setFilter] = useState("");
   const [filterDetail, setFilterDetail] = useState([]);
+  const firstLetter = match.params.id.toLowerCase().charAt(0);
   let i = 0,
     j = 0;
 
-  const fetchFilterList = async (name) => {
-    const firstLetter = name.charAt(0).toLowerCase();
-    const str = nameCheck(name);
+  const fetchFilterList = async () => {
     try {
-      console.log(firstLetter);
       const res = await Axios.get(`list.php?${firstLetter}=list`);
-      setFilter(res.data.drinks);
-      setFirstFilter(str);
-      console.log(res.data.drinks[0].str);
       console.log(res.data.drinks);
-      console.log(str);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const fetchFilter = async (cat) => {
-    try {
-      const res = await Axios.get(`filter.php?c=${cat}`);
-      setFilterDetail(res.data.drinks);
-      console.log(res.data.drinks);
+      setFilterList(res.data.drinks);
+
+      for (const key in res.data.drinks[0]) {
+        if (res.data.drinks[0].hasOwnProperty(key)) {
+          setFilter(res.data.drinks[0][key]);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const nameCheck = (name) => {
-    if (name === "Glass") {
-      return "strGlass";
-    } else if (name === "Ingredients") {
-      return "strIngredient1";
-    } else {
-      return "strAlcoholic";
+  const fetchFilter = async (l, f) => {
+    try {
+      const res = await Axios.get(`filter.php?${l}=${f}`);
+      console.log(res.data.drinks);
+      setFilterDetail(res.data.drinks);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchFilterList(match.params.id);
-    fetchFilter(firstFilter);
-  }, [match.params.id, firstFilter]);
+    fetchFilterList();
+    fetchFilter(firstLetter, filter);
+  }, [firstLetter, filter]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -121,33 +113,50 @@ const Filter = ({ match }) => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {/* {filter &&
-            filter.map((f) => (
-              <Tab
-                key={f}
-                label={`${f}`}
-                {...a11yProps(i++)}
-                onClick={() => setFilter(`${f}`)}
-              />
-            ))} */}
+          {filterList &&
+            filterList.map((f) => {
+              for (const key in f) {
+                if (f.hasOwnProperty(key)) {
+                  const element = f[key];
+                  return (
+                    <Tab
+                      key={element}
+                      label={`${element}`}
+                      {...a11yProps(i++)}
+                      onClick={() => {
+                        setFilter(`${element}`);
+                        setFilterDetail([]);
+                      }}
+                    />
+                  );
+                }
+              }
+            })}
         </Tabs>
       </AppBar>
-      {/* {filter &&
-        filter.map((f) => (
-          <TabPanel value={value} index={j++} key={f}>
-            {filterDetail ? (
-              filterDetail.map((cocktail) => (
-                <CocktailCard
-                  key={cocktail.idDrink}
-                  cocktail={cocktail}
-                  category={f}
-                />
-              ))
-            ) : (
-              <Loader />
-            )}
-          </TabPanel>
-        ))} */}
+      {filterList &&
+        filterList.map((f) => {
+          for (const key in f) {
+            if (f.hasOwnProperty(key)) {
+              const element = f[key];
+              return (
+                <TabPanel value={value} index={j++} key={element}>
+                  {filterDetail ? (
+                    filterDetail.map((cocktail) => (
+                      <CocktailCard
+                        key={cocktail.idDrink}
+                        cocktail={cocktail}
+                        category={element}
+                      />
+                    ))
+                  ) : (
+                    <Loader />
+                  )}
+                </TabPanel>
+              );
+            }
+          }
+        })}
     </div>
   );
 };
