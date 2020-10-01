@@ -9,6 +9,7 @@ import { ThemeProvider } from "@material-ui/core";
 import Category from "./components/Category";
 import CocktailDetailPage from "./components/CocktailDetailPage";
 import IngredientDetailPage from "./components/IngredientDetailPage";
+import Filter from "./components/Filter";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ function App() {
               path="/cocktail/:id"
               component={CocktailDetailPage}
             ></Route>
-            {/* <Route exact path="/ingredients" component={Ingredients}></Route> */}
+            <Route exact path="/:id" component={Filter}></Route>
             <Route
               exact
               path="/ingredients/:id"

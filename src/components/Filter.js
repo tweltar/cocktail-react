@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Axios from "axios";
-import { categories } from "../utils";
 import Loader from "./Loader";
 import CocktailCard from "./CocktailCard";
 import AppBar from "@material-ui/core/AppBar";
@@ -57,26 +56,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Category = () => {
+const Filter = ({ match }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [category, setCategory] = useState("Cocktail");
-  const [categoryDetail, setCategoryDetail] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [firstFilter, setFirstFilter] = useState({});
+  const [filterDetail, setFilterDetail] = useState([]);
   let i = 0,
     j = 0;
 
-  const fetchCategory = async (cat) => {
+  const fetchFilterList = async (name) => {
+    const firstLetter = name.charAt(0).toLowerCase();
+    const str = nameCheck(name);
+    try {
+      console.log(firstLetter);
+      const res = await Axios.get(`list.php?${firstLetter}=list`);
+      setFilter(res.data.drinks);
+      setFirstFilter(str);
+      console.log(res.data.drinks[0].str);
+      console.log(res.data.drinks);
+      console.log(str);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchFilter = async (cat) => {
     try {
       const res = await Axios.get(`filter.php?c=${cat}`);
-      setCategoryDetail(res.data.drinks);
+      setFilterDetail(res.data.drinks);
+      console.log(res.data.drinks);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const nameCheck = (name) => {
+    if (name === "Glass") {
+      return "strGlass";
+    } else if (name === "Ingredients") {
+      return "strIngredient1";
+    } else {
+      return "strAlcoholic";
+    }
+  };
+
   useEffect(() => {
-    fetchCategory(category);
-  }, [category]);
+    fetchFilterList(match.params.id);
+    fetchFilter(firstFilter);
+  }, [match.params.id, firstFilter]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -94,35 +121,35 @@ const Category = () => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          {categories &&
-            categories.map((c) => (
+          {/* {filter &&
+            filter.map((f) => (
               <Tab
-                key={c}
-                label={`${c}`}
+                key={f}
+                label={`${f}`}
                 {...a11yProps(i++)}
-                onClick={() => setCategory(`${c}`)}
+                onClick={() => setFilter(`${f}`)}
               />
-            ))}
+            ))} */}
         </Tabs>
       </AppBar>
-      {categories &&
-        categories.map((c) => (
-          <TabPanel value={value} index={j++} key={c}>
-            {categoryDetail ? (
-              categoryDetail.map((cocktail) => (
+      {/* {filter &&
+        filter.map((f) => (
+          <TabPanel value={value} index={j++} key={f}>
+            {filterDetail ? (
+              filterDetail.map((cocktail) => (
                 <CocktailCard
                   key={cocktail.idDrink}
                   cocktail={cocktail}
-                  category={c}
+                  category={f}
                 />
               ))
             ) : (
               <Loader />
             )}
           </TabPanel>
-        ))}
+        ))} */}
     </div>
   );
 };
 
-export default Category;
+export default Filter;
